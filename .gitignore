@@ -20,6 +20,10 @@
 *.out
 *.app
 
+# Vim temp files
+*.*~
+*.swp
+
 # =========================
 # Operating System Files
 # =========================
