@@ -1,6 +1,6 @@
 #include <iostream>
-#include <cstdlib>
 #include <fstream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -19,9 +19,9 @@ NumericStringGenerator::NumericStringGenerator(int _length, const char *_filenam
 
 void NumericStringGenerator::generate() {
   ofstream outfile(filename);
-  int i=1;
-  while (i < length) {
-    outfile << i++;
+  int digit = 1;
+  while (digit < length) {
+    outfile << digit++;
   }
 }
 
@@ -32,7 +32,7 @@ int main (int argc, const char **argv) {
   const char *seriesLength = argv[1];
   const char *outputFilename = argv[2];
 
-  int length = itoa(seriesLength);
+  int length = atoi(seriesLength);
   if (length == 0)
     // integer could not be generated from input
     return 0;
