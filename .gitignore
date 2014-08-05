@@ -24,6 +24,10 @@
 *.*~
 *.swp
 
+
+# Test output files
+*/test/*txt
+
 # =========================
 # Operating System Files
 # =========================
