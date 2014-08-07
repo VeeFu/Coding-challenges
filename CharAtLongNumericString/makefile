@@ -9,7 +9,7 @@ TESTEXE = test.exe
 PROJSOURCES = $(SRCDIR)CharAtLongNumericString.cpp
 PROJOBJS = $(PROJSOURCES:.cpp=.o)
 
-SOLUTIONFILE = ./test/NumericStringGenerator/src/1000000000ints.txt
+SOLUTIONFILE = ./test/NumericStringGenerator/src/1000000000ints.data
 
 
 
