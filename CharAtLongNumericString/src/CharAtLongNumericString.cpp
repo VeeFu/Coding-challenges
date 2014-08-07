@@ -1,3 +1,7 @@
+#include <cstdlib>
+#include <cstdio>
+#include "charatlongstring.h"
+
 /*
  *  
  * 
@@ -25,24 +29,79 @@ Notes:
 pseudo-code
 workingval = x
 pow10range = 1
-charcount = 0
+pow10RangeLength = 0
 do {
-  charcount = 9 * 10^pow10range * n
-  workingval =- charcount
+  pow10RangeLength = 9 * 10^pow10range * n
+  workingval =- pow10RangeLength
   pow10range++
 } while (workingval > 0)
 
-workingval += charcount
+workingval += pow10RangeLength
 pow10range--
 
 
 Determine which integer exists in the range at x-10^n into the current range, i.e.
-  i = (x - 10^n) / n
+  i = (x - 10^n) / n + 10^n
 Then the character number in that integer, i.e.
   c = (x - 10^n) % n
 
 Finally return the 'c' character in the string representation of the 'i' integer, i.e.
-  digit = itoa(i)[c];
+  character = itoa(i)[c];
 
   *
   */
+
+
+template <typename T> 
+char calcCharAt(T offset) {
+  T charCounter = offset;
+  T pow10 = 1;
+  T n = 1;
+  T pow10RangeLength = 0;
+
+  // find which power-of-ten range where the offset falls
+  do {
+    pow10RangeLength = 9 * pow10 * n;
+    charCounter -= pow10RangeLength;
+    pow10 *= 10;
+    n++;
+  } while (charCounter > 0);
+
+  // above loop terminates at one-past, so rollback values
+  charCounter += pow10RangeLength;
+  pow10 /= 10;
+  n--;
+  std::printf(" debug: n = %lld", n);
+  std::printf(" debug: pow10 = %lld", pow10);
+  std::printf(" debug: charCounter = %lld", charCounter);
+
+  // at this point we know 'offset' falls between 10^n and 10^(n+1)
+  // and that each integer is 'n' characters long in this range
+  // so subtractin all previous power-of-ten ranges from 'offset'
+  // leaves us with the number of characters into the 10^n through 10^(n+1)
+  // range the requeste offset falls
+  /* charCounter should already contain this value */
+
+  // divide this by n and add 10^n to get the integer the offset falls
+  // upon.
+  T targetValue = charCounter / n + pow10;
+  std::printf(" debug: targetValue = %lld", targetValue);
+
+  // modulus this value by n to get the offset within the integer value
+  // the character falls
+  T valueOffset = charCounter % n;
+  
+  std::printf(" debug: valueOffset = %lld", valueOffset);
+
+  char *integerString = (char*)std::malloc(n+1);
+  std::sprintf (integerString, "%lld", targetValue);
+  
+  std::printf(" debug: integerString = %s", integerString);
+  
+  char targetCharacter = integerString[valueOffset];
+  std::free(integerString);
+  return targetCharacter;
+
+}
+
+template char calcCharAt<int64_t>(int64_t);

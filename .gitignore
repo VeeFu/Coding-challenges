@@ -21,12 +21,12 @@
 *.app
 
 # Vim temp files
-*.*~
+*~
 *.swp
 
 
 # Test output files
-*/test/*txt
+*data
 
 # =========================
 # Operating System Files
